@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+// Define Breed type
 interface Breed {
   id: string;
   name: string;
@@ -10,6 +11,7 @@ interface Breed {
   reference_image_id: string;
 }
 
+// Define CatState type
 interface CatState {
   breeds: Breed[];
   selectedBreed: Breed | null;
@@ -17,6 +19,7 @@ interface CatState {
   error: string | null;
 }
 
+// Initial state for the slice
 const initialState: CatState = {
   breeds: [],
   selectedBreed: null,
@@ -45,6 +48,7 @@ export const fetchBreedDetails = createAsyncThunk<Breed, string>('cats/fetchBree
   return response.data;
 });
 
+// Create slice for cats state management
 const catSlice = createSlice({
   name: 'cats',
   initialState,

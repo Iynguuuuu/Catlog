@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks'; // Custom hooks for Redux dispatch and state selector
 import { useRouter } from 'next/router';
-import { fetchBreedDetails } from '../../store/catSlice';
+import { fetchBreedDetails } from '../../store/catSlice'; // Action to fetch cat breeds
 import { RootState } from '../../store';
 import Image from 'next/image';
 
@@ -10,23 +10,27 @@ const BreedDetails = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const breed = useAppSelector((state: RootState) => state.cats.selectedBreed);
-  const status = useAppSelector((state: RootState) => state.cats.status);
+  const breed = useAppSelector((state: RootState) => state.cats.selectedBreed); // Select selected breed from Redux state
+  const status = useAppSelector((state: RootState) => state.cats.status); // Select status from Redux state
 
+  // Fetch breed details when ID changes
   useEffect(() => {
     if (id) {
       dispatch(fetchBreedDetails(id as string));
     }
   }, [id, dispatch]);
 
+  // Display loading message while fetching data
   if (status === 'loading') {
     return <div className="flex text-4xl items-center justify-center h-screen">Loading... ⌛</div>
   }
 
+  // Display error message if breed is not found
   if (!breed) {
     return <div className="flex text-4xl items-center justify-center h-screen">Breed not found 🚫</div>;
   }
 
+  // Display breed details
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="bg-white p-8 rounded-lg shadow-lg text-center">
